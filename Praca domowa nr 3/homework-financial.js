@@ -8,7 +8,9 @@ function getFinancialObject(data) {
   //i.	How much money was spent in 2014
   financialObject.moneySpentIn2014 = parseFloat(
     data
-      .filter((currentElement) => getYear(currentElement) === 2014)
+      .filter(
+        (currentElement) => stringToDate(currentElement).getFullYear() === 2014
+      )
       .reduce((sum, currentElement) => {
         return sum + parseFloat(currentElement.cost);
       }, 0)
@@ -47,13 +49,70 @@ function getFinancialObject(data) {
           .toFixed(2)
       );
     });
+
+  // iv.	Spendings by month
+  const monthArray = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  financialObject.spendingsPerMonth = {};
+  monthArray.forEach((month, index) => {
+    financialObject.spendingsPerMonth[month] = parseFloat(
+      data
+        .filter(
+          (currentElement) => stringToDate(currentElement).getMonth() === index
+        )
+        .reduce((sum, currentElement) => {
+          return sum + parseFloat(currentElement.cost);
+        }, 0)
+        .toFixed(2)
+    );
+  });
+
+  // v.	Spendings per day of the week
+  const weekDaysArray = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  financialObject.spendingsPerDayOfTheWeek = {};
+  weekDaysArray.forEach((day, index) => {
+    financialObject.spendingsPerDayOfTheWeek[day] = parseFloat(
+      data
+        .filter(
+          (currentElement) => stringToDate(currentElement).getDay() === index
+        )
+        .reduce((sum, currentElement) => {
+          return sum + parseFloat(currentElement.cost);
+        }, 0)
+        .toFixed(2)
+    );
+  });
+
   return console.log(financialObject);
 }
 
 // TODO (util functions)
-function getYear(data) {
-  const year = Number(data.detailsOfPayent.date.slice(-4));
-  return year;
+function stringToDate(data) {
+  return new Date(
+    data.detailsOfPayent.date.slice(-4),
+    data.detailsOfPayent.date.slice(3, 5) - 1,
+    data.detailsOfPayent.date.slice(0, 2)
+  );
 }
 
 function distinctCompanies(data) {
