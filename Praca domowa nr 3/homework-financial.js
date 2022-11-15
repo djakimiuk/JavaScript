@@ -18,17 +18,36 @@ function getFinancialObject(data) {
   const companyArray = distinctCompanies(data);
   financialObject.earningsPerCompany = {};
   companyArray.forEach((company) => {
-    financialObject.earningsPerCompany[company] = parseFloat(data
-      .filter(
-        (currentElement) => currentElement.detailsOfPayent.company === company
-      )
-      .reduce((sum, currentElement) => {
-        return sum + parseFloat(currentElement.cost);
-      }, 0).toFixed(2));
+    financialObject.earningsPerCompany[company] = parseFloat(
+      data
+        .filter(
+          (currentElement) => currentElement.detailsOfPayent.company === company
+        )
+        .reduce((sum, currentElement) => {
+          return sum + parseFloat(currentElement.cost);
+        }, 0)
+        .toFixed(2)
+    );
   });
 
+  //iii.	Spendings per transaction type
+  const transactionArray = distinctTransactionType(data);
+  financialObject.spendingsPerTransType = {};
+  transactionArray
+    .sort((a, b) => a - b)
+    .forEach((type) => {
+      financialObject.spendingsPerTransType[`Type ${type}`] = parseFloat(
+        data
+          .filter(
+            (currentElement) => currentElement.detailsOfPayent.Type === type
+          )
+          .reduce((sum, currentElement) => {
+            return sum + parseFloat(currentElement.cost);
+          }, 0)
+          .toFixed(2)
+      );
+    });
   return console.log(financialObject);
-  // )}
 }
 
 // TODO (util functions)
@@ -38,10 +57,15 @@ function getYear(data) {
 }
 
 function distinctCompanies(data) {
-  const result = [
+  return (result = [
     ...new Set(data.map((element) => element.detailsOfPayent.company)),
-  ];
-  return result;
+  ]);
 }
 
-const a = 1
+function distinctTransactionType(data) {
+  return (result = [
+    ...new Set(data.map((element) => element.detailsOfPayent.Type)),
+  ]);
+}
+
+let a = 1;
