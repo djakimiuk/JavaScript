@@ -1,6 +1,20 @@
 const financialData = require("./financial.json");
 
-console.log("Financial data: " + getFinancialObject(financialData));
+console.log(`Financial data:
+-Money spent in 2014: ${getFinancialObject(financialData).moneySpentIn2014} \n
+-Earnings per company: ${JSON.stringify(
+  getFinancialObject(financialData).earningsPerCompany
+)} \n
+-Spendings per transaction type: ${JSON.stringify(
+  getFinancialObject(financialData).spendingsPerTransType
+)} \n 
+-Spending per month: ${JSON.stringify(
+  getFinancialObject(financialData).spendingsPerMonth
+)} \n
+-Spending per day of the week: ${JSON.stringify(
+  getFinancialObject(financialData).spendingsPerDayOfTheWeek
+)}
+`);
 
 function getFinancialObject(data) {
   const financialObject = {};
@@ -103,7 +117,7 @@ function getFinancialObject(data) {
     );
   });
 
-  return console.log(financialObject);
+  return financialObject;
 }
 
 // TODO (util functions)
