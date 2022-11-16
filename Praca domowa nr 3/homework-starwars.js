@@ -87,12 +87,21 @@ function getPlanetNameWithLowestDifference(key1, key2) {
 
 console.log(
   "Ships with max crew of 4 created between 10.12.2014 - 12.12.2014 number is: " +
-    getCrewShipFrom(4, new Date(2014, 12, 10), new Date(2014, 12, 12)).length
+    getCrewShipFrom(
+      4,
+      new Date(2014, 11, 10),
+      new Date(2014, 11, 12, 23, 59, 59)
+    ).length
 );
 
 function getCrewShipFrom(maxCrew, dateStart, dateEnd) {
   let ship;
-  // TODO
+  ship = starships.filter(
+    (currentElement) =>
+      parseFloat(currentElement.crew) <= maxCrew &&
+      new Date(currentElement.created) >= dateStart &&
+      new Date(currentElement.created) <= dateEnd
+  );
   return ship;
 }
 
@@ -104,7 +113,20 @@ console.log(
 );
 
 function getPeopleSortedByOriginPlanetDiameter(startEp, endEp) {
-  let people;
+  let characters;
+  let charactersURLarray = [];
+  films
+    .filter(
+      (currentElement) =>
+        currentElement.episode_id >= startEp &&
+        currentElement.episode_id <= endEp
+    )
+    .forEach((currentElement) =>
+      charactersURLarray.push(...currentElement.characters)
+    );
+  characters = people.filter((currentElement) =>
+    charactersURLarray.includes(currentElement.url)
+  );
 
-  return people;
+  return characters;
 }
