@@ -25,7 +25,8 @@ function sumAllStarshipsCostFromEpisodes(startEp, endEp) {
     .filter(
       (currentElement) =>
         starshipURLarray.includes(currentElement.url) &&
-        currentElement.cost_in_credits !== "unknown"
+        currentElement.cost_in_credits * 1 ===
+          parseFloat(currentElement.cost_in_credits)
     )
     .reduce((accumulator, currentElement) => {
       return accumulator + parseFloat(currentElement.cost_in_credits);
@@ -36,14 +37,24 @@ function sumAllStarshipsCostFromEpisodes(startEp, endEp) {
 // find the fastest starship you can afford having 8500000 credits
 
 console.log(
-  "Fastest ship I can get for up to 8500000 is: " +
-    getFastestShipFor(8500000).name
+  "Fastest ship I can get for up to 8500000 is: " + getFastestShipFor(8500000)
 );
 
 function getFastestShipFor(money) {
   let ship;
-  // TODO
-  return ship;
+  ship = starships
+    .filter(
+      (currentElement) =>
+        parseFloat(currentElement.cost_in_credits) <= money &&
+        currentElement.max_atmosphering_speed * 1 ===
+          parseFloat(currentElement.max_atmosphering_speed)
+    )
+    .sort(
+      (a, b) =>
+        parseFloat(b.max_atmosphering_speed) -
+        parseFloat(a.max_atmosphering_speed)
+    );
+  return JSON.stringify(ship[0].name);
 }
 
 // find planet name with the lowest difference between the rotation period and orbital period
@@ -55,8 +66,21 @@ console.log(
 
 function getPlanetNameWithLowestDifference(key1, key2) {
   let planetName;
-  // TODO
-  return planetName;
+  planetName = planets
+    .filter(
+      (currentElement) =>
+        currentElement.rotation_period * 1 ===
+          parseFloat(currentElement.rotation_period) &&
+        currentElement.orbital_period * 1 ===
+          parseFloat(currentElement.orbital_period)
+    )
+    .sort(
+      (a, b) =>
+        a.orbital_period -
+        a.rotation_period -
+        (b.orbital_period - b.rotation_period)
+    );
+  return JSON.stringify(planetName[0].name);
 }
 
 // map all starships with crew <= 4 that were created between 10 dec 2014 and 15 dec 2014
