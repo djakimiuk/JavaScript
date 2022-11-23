@@ -4,15 +4,13 @@
 // and on reject “Now I don’t’.
 
 function getRandomPromise() {
-  const randomNumber = Math.round(Math.random()); //it returns random number 0 or 1
-  const myPromise = new Promise((resolve, reject) => {
-    if (randomNumber) {
-      return resolve("Now I work");
+  return new Promise((resolve, reject) => {
+    if (Math.round(Math.random())) {
+      resolve("Now I work");
     } else {
-      return reject("Now I don't");
+      reject("Now I don't");
     }
   });
-  return myPromise;
 }
 
 getRandomPromise()
