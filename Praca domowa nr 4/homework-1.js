@@ -4,9 +4,9 @@
 // and on reject “Now I don’t’.
 
 function getRandomPromise() {
-  const randomNumber = Math.round(Math.random());
+  const randomNumber = Math.round(Math.random()); //it returns random number 0 or 1
   const myPromise = new Promise((resolve, reject) => {
-    if (randomNumber === 1) {
+    if (randomNumber) {
       return resolve("Now I work");
     } else {
       return reject("Now I don't");
