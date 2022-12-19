@@ -1,4 +1,5 @@
 //5.	EXAM Create a solution that will tell us what poker set we have. The solution is to deal us 5 cards from the standard 52 card deck at random. Based on cards on our hand the program should tell us what is the best poker set.
+const prompt = require("sync-input");
 class CardDeck {
   constructor() {
     this.cardDeck = [];
@@ -22,15 +23,19 @@ class CardDeck {
       "A",
     ];
   }
-
   prepareDeck() {
     const { suits, values, cardDeck } = this;
+    this.#clearDeck;
     for (let suit in suits) {
       for (let value in values) {
         cardDeck.push({ value: values[value], suit: suits[suit] });
       }
     }
     return this.cardDeck;
+  }
+
+  #clearDeck() {
+    this.cardDeck = [];
   }
 
   shuffleCards() {
@@ -45,13 +50,24 @@ class CardDeck {
     }
   }
 
+  #cardOnHand(index) {
+    return this.playerHand[index].value + " of " + this.playerHand[index].suit;
+  }
+
   dealFiveCards() {
     this.playerHand = [];
     this.playerHand = this.cardDeck.splice(-5);
+    console.log(
+      `Your cards: ${this.#cardOnHand(0)}, ${this.#cardOnHand(
+        1
+      )}, ${this.#cardOnHand(2)}, ${this.#cardOnHand(3)}, ${this.#cardOnHand(
+        4
+      )}`
+    );
   }
 
   remainingCards() {
-    return this.cardDeck.length;
+    console.log(`There are ${this.cardDeck.length} cards left in the deck.`);
   }
 
   #playerHandSort() {
@@ -149,14 +165,59 @@ class CardDeck {
           `The highest card: ${playerHand[4].value} of ${playerHand[4].suit}`
         );
     }
-    console.log(valueCounter);
   }
 }
 
-const deck = new CardDeck();
-deck.prepareDeck();
-deck.shuffleCards();
-deck.dealFiveCards();
-console.log(deck.playerHand);
-console.log(deck.remainingCards());
-deck.bestPokerSet();
+const gameInstruction = `To play you have to give instructions to the dealer. 
+- 1, if you want to prepare a new card deck,
+  - 2, if you want to shuffle the cards,
+  - 3, if you want to receive 5 cards on the table,
+  - 4, if you want to check the remaining number of cards in the deck,
+  - 5, if you want to exit the game`;
+
+function chooseFunc(action) {
+  switch (action) {
+    case 1:
+      deck = new CardDeck();
+      deck.prepareDeck();
+      console.log(`New card deck prepared!`);
+      break;
+    case 2:
+      deck.shuffleCards();
+      console.log(`Cards shuffled!`);
+      break;
+    case 3:
+      if (deck.cardDeck.length >= 5) {
+        deck.dealFiveCards();
+        deck.bestPokerSet();
+      } else {
+        console.log(
+          `Sorry, there are ${deck.cardDeck.length} cards left in the deck. Ask the dealer to prepare a new deck of cards.`
+        );
+      }
+      break;
+    case 4:
+      deck.remainingCards();
+      break;
+    case 5:
+      break;
+    case 6:
+      console.log(gameInstruction);
+      break;
+    default:
+      console.log(`Sorry, I don't understand you. Type 1, 2, 3, 4 or 5 >`);
+  }
+}
+
+const name = prompt(`What is your name? >`);
+console.log(`Welcome ${name ? name : "Unknown"} to Casino Royale!
+${gameInstruction}`);
+let deck = new CardDeck();
+while (true) {
+  const choosenOption = +prompt(`What do you want to do? (6 - for help) >`);
+  chooseFunc(choosenOption);
+  if (choosenOption === 5) {
+    console.log(`See you next time!`);
+    break;
+  }
+}
