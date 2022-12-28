@@ -36,4 +36,174 @@ const sudokuGrid = [
   [4, 0, 3, 0, 0, 6, 0, 0, 0],
 ];
 
+function valueCheck(grid, col, row, value) {
+  let colArray = [];
+  grid.forEach((element) => {
+    colArray.push(element[col - 1]);
+  });
+  let subgridArray = [];
+  switch (col) {
+    case 1:
+    case 2:
+    case 3:
+      switch (row) {
+        case 1:
+        case 2:
+        case 3:
+          subgridArray.push(
+            grid[0][0],
+            grid[0][1],
+            grid[0][2],
+            grid[1][0],
+            grid[1][1],
+            grid[1][2],
+            grid[2][0],
+            grid[2][1],
+            grid[2][2]
+          );
+          break;
+        case 4:
+        case 5:
+        case 6:
+          subgridArray.push(
+            grid[3][0],
+            grid[3][1],
+            grid[3][2],
+            grid[4][0],
+            grid[4][1],
+            grid[4][2],
+            grid[5][0],
+            grid[5][1],
+            grid[5][2]
+          );
+          break;
+        case 7:
+        case 8:
+        case 9:
+          subgridArray.push(
+            grid[6][0],
+            grid[6][1],
+            grid[6][2],
+            grid[7][0],
+            grid[7][1],
+            grid[7][2],
+            grid[8][0],
+            grid[8][1],
+            grid[8][2]
+          );
+          break;
+      }
+      break;
+    case 4:
+    case 5:
+    case 6:
+      switch (row) {
+        case 1:
+        case 2:
+        case 3:
+          subgridArray.push(
+            grid[0][3],
+            grid[0][4],
+            grid[0][5],
+            grid[1][3],
+            grid[1][4],
+            grid[1][5],
+            grid[2][3],
+            grid[2][4],
+            grid[2][5]
+          );
+          break;
+        case 4:
+        case 5:
+        case 6:
+          subgridArray.push(
+            grid[3][3],
+            grid[3][4],
+            grid[3][5],
+            grid[4][3],
+            grid[4][4],
+            grid[4][5],
+            grid[5][3],
+            grid[5][4],
+            grid[5][5]
+          );
+          break;
+        case 7:
+        case 8:
+        case 9:
+          subgridArray.push(
+            grid[6][6],
+            grid[6][7],
+            grid[6][8],
+            grid[7][6],
+            grid[7][7],
+            grid[7][8],
+            grid[8][6],
+            grid[8][7],
+            grid[8][8]
+          );
+          break;
+      }
+      break;
+    case 7:
+    case 8:
+    case 9:
+      switch (row) {
+        case 1:
+        case 2:
+        case 3:
+          subgridArray.push(
+            grid[0][0],
+            grid[0][1],
+            grid[0][2],
+            grid[1][0],
+            grid[1][1],
+            grid[1][2],
+            grid[2][0],
+            grid[2][1],
+            grid[2][2]
+          );
+          break;
+        case 4:
+        case 5:
+        case 6:
+          subgridArray.push(
+            grid[3][0],
+            grid[3][1],
+            grid[3][2],
+            grid[4][0],
+            grid[4][1],
+            grid[4][2],
+            grid[5][0],
+            grid[5][1],
+            grid[5][2]
+          );
+          break;
+        case 7:
+        case 8:
+        case 9:
+          subgridArray.push(
+            grid[6][0],
+            grid[6][1],
+            grid[6][2],
+            grid[7][0],
+            grid[7][1],
+            grid[7][2],
+            grid[8][0],
+            grid[8][1],
+            grid[8][2]
+          );
+          break;
+      }
+      break;
+  }
+
+  if (
+    grid[row].includes(value) &&
+    colArray.includes(value) &&
+    subgridArray.includes(value)
+  ) {
+    return true;
+  }
+}
 
