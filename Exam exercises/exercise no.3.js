@@ -40,8 +40,8 @@ function displaySudokuGrid(grid) {
 ===========================`);
 }
 
+//function checks whether is it possible to place a number in desired square
 function valueChecker(grid, col, row, value) {
-  //function checks whether is it possible to place a number in desired square
   let colArray = [];
 
   grid.forEach((element) => {
@@ -65,6 +65,7 @@ function valueChecker(grid, col, row, value) {
   );
 }
 
+//function finds first unfilled square in the given grid and returns its coordinates [row, col], if there are no unfilled squared it returns false
 function findEmptySquare(grid) {
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
@@ -77,7 +78,9 @@ function findEmptySquare(grid) {
 }
 
 function sudokuSolver(grid) {
+  //coordinates of the first unfilled square
   let emptySquare = findEmptySquare(grid);
+  //if there are no empty squares we return the grid
   if (emptySquare === false) {
     return grid;
   }
@@ -89,6 +92,7 @@ function sudokuSolver(grid) {
       grid[emptySqRow][emptySqCol] = i;
       sudokuSolver(grid);
     }
+    //if validation failed for the 1-10 values for desired square, it clears the square and moves to previous step to try another value
     if (findEmptySquare(grid)) {
       grid[emptySqRow][emptySqCol] = 0;
     }
