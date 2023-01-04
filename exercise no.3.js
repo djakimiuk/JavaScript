@@ -203,7 +203,7 @@ function valueCheck(grid, col, row, value) {
     colArray.includes(value) &&
     subgridArray.includes(value)
   ) {
-    return true;
-  }
+  return true;
+}
 }
 
