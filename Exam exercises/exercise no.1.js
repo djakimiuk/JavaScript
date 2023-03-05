@@ -53,4 +53,4 @@ function weightComparison() {
   return heavyBallPosition;
 }
 
-console.log(weightComparison());
+console.log(`Index of the heaviest ball: ${weightComparison()}`);
