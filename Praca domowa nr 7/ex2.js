@@ -22,4 +22,4 @@ class Palindrome {
 }
 
 const test = new Palindrome();
-console.log(test.findAllPalindromes("baerren"));
+console.log(test.findAllPalindromes("kajakkakatattarrattat"));
