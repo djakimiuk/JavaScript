@@ -1,4 +1,5 @@
 class MorseTranslator {
+  reg = new RegExp(/^[a-zA-Z" "]*$/);
   alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
   morseCode = [
     ".-",
@@ -29,20 +30,27 @@ class MorseTranslator {
     "--..",
     ".......",
   ];
-  constructor() {}
-  englishToMorse(sentence) {
-    const reg = new RegExp(/^[a-zA-Z" "]*$/);
-    if (!sentence.match(reg)) {
-      return "The sentence should contain letters only!";
+  constructor(sentence) {
+    this.sentence = sentence;
+  }
+
+  translate() {
+    if (!this.sentence.match(this.reg)) {
+      return this.#morseToEnglish();
     }
-    const lettersArr = sentence.toUpperCase().split("");
+    return this.#englishToMorse();
+  }
+
+  #englishToMorse() {
+    const lettersArr = this.sentence.toUpperCase().split("");
     const resultArr = lettersArr.map(
       (letter) => this.morseCode[this.alphabet.indexOf(letter)]
     );
     return resultArr.join(" ");
   }
-  morseToEnglish(sentenceInMorse) {
-    const morseLettersArr = sentenceInMorse.split(" ");
+
+  #morseToEnglish() {
+    const morseLettersArr = this.sentence.split(" ");
     const resultArr = morseLettersArr.map(
       (letter) => this.alphabet[this.morseCode.indexOf(letter)]
     );
@@ -50,9 +58,10 @@ class MorseTranslator {
   }
 }
 
-const translator = new MorseTranslator();
-
-console.log(translator.englishToMorse("Dawid Dawid"));
-console.log(
-  translator.morseToEnglish("-.. .- .-- .. -.. ....... -.. .- .-- .. -..")
+const translator1 = new MorseTranslator("Dawid Dawid");
+const translator2 = new MorseTranslator(
+  "-.. .- .-- .. -.. ....... -.. .- .-- .. -.."
 );
+
+console.log(translator1.translate());
+console.log(translator2.translate());
