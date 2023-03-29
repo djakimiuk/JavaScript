@@ -1,8 +1,11 @@
 class Palindrome {
-  findAllPalindromes(string) {
+  constructor(string) {
+    this.string = string;
+  }
+  findAllPalindromes() {
     const palindromesArr = [];
-    for (let i = 0; i <= string.length; i++) {
-      let slicedString = string.slice(i);
+    for (let i = 0; i <= this.string.length; i++) {
+      let slicedString = this.string.slice(i);
       for (let j = 0; j <= slicedString.length; j++) {
         let slicedStringToIterate = slicedString.slice(0, j);
         if (this.#isPalindromeCheck(slicedStringToIterate)) {
@@ -21,5 +24,5 @@ class Palindrome {
   }
 }
 
-const test = new Palindrome();
-console.log(test.findAllPalindromes("kajakkakatattarrattat"));
+const test = new Palindrome("kajakkakatattarrattat");
+console.log(test.findAllPalindromes());
