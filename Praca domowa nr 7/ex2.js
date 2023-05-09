@@ -15,6 +15,7 @@ class Palindrome {
       }
     }
     palindromesArr.sort((a, b) => b.length - a.length);
+    console.log(palindromesArr);
     return palindromesArr[0];
   }
 
