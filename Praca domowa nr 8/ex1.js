@@ -9,7 +9,7 @@ const treasureHuntArr = [
 const findTreasure = (array) => {
   let currentPosition = [0, 0];
   let currentValue = array[0][0];
-  for (let i = 0; i < Infinity; i++) {
+  for (;;) {
     console.log(
       `Current array position: ${currentPosition}, Current value: ${currentValue}`
     );
